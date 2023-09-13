@@ -1,0 +1,53 @@
+.logo{
+    height: 30px;
+    width:auto;
+  
+  }
+  .Header{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .Header-wrap{
+    display: flex;
+    height: 30px;
+    width: 85%;
+    margin: 20px 0;
+    justify-content: space-between;
+  }
+  .Header-wrap .logo-wrap input{
+    width: 100%;
+    min-width: 100px;
+    margin-left: 20px;
+    border: none;
+    height: 30px;
+    padding: 0;
+    
+  }
+  .Header-wrap .logo-wrap{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+  }
+  .Header-wrap button{
+  
+    border: none;
+    background-color: white;
+    height: 30px;
+  }
+  .router-wrap{
+    display: flex;
+    gap:20px;
+    justify-content: center;
+  }
+  .router-wrap div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+  }
+  .router-wrap div .link{
+    color:white;
+    text-decoration: none;
+  }

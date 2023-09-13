@@ -1,0 +1,105 @@
+body{
+    margin:0;
+    background-color: black;
+  }
+  .main-container{
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .movieGridContainer{
+    width:85%;
+    display:grid;
+    grid-template-columns: repeat(5 , auto);
+    height:auto;
+    justify-content: space-between;
+    row-gap: 15px;
+  }
+  
+  .movieGridContainer .gridMovieItem{
+    width:auto;
+    height: auto;
+    margin:3px;
+  }
+  .movieGridContainer .gridMovieItemWrap{
+    width:auto;
+    height: auto;
+    background-color: #303030;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  .movieGridContainer .gridMovieItemWrap .fav{
+    display:flex;
+    justify-content: center;
+    width:90%;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: #403F3F;
+  }
+  .movieGridContainer .gridMovieItemWrap .fav .fav-button{
+    border: none;
+    background-color: #403F3F;
+    height: 30px;
+    color: white;
+    font-weight: 500;
+  }
+  .pagination-container button.selected {
+    background-color: aqua;
+  }
+  .favourites{
+    display:flex;
+    justify-content: center;
+  }
+  .fav-container{
+    display:flex;
+    width: 85vw;
+    align-self: center;
+  }
+  .fav-container .genreFilter{
+    width:30%;
+    display: flex;
+    justify-content: center;
+  }
+  .fav-container .favTableWrap{
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color:white;
+  }
+  .fav-container .favTableWrap input{
+    margin-bottom: 20px;
+    width:50%;
+    height: 30px;
+    background-color:#403F3F;
+    color:white;
+    border: none;
+    border-radius: 5px;
+  }
+  .favTable tbody tr td img{
+    width:70px;
+  }
+  .favTable tbody tr td{
+    border:0.5px solid white;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+  .favTable thead tr th{
+    border:0.5px solid white;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+  .fav-container .genreFilter{
+    color:white;
+  }
+  .fav-container .genreFilter li{
+    cursor: pointer;
+  }
+  .fav-container .genreFilter .selected{
+    background-color: blue;
+  }
+  

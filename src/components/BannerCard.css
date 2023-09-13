@@ -1,0 +1,14 @@
+.BannerCard{
+    background-color: white;
+    min-width: 100%;
+    height: 500px;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.BannerCard img{
+    max-width: 100%;
+    max-height: auto;
+    display: block;
+}
