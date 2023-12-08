@@ -102,4 +102,11 @@ body{
   .fav-container .genreFilter .selected{
     background-color: blue;
   }
-  
+  tbody .noItem{
+    color:white;
+    font-size:50px;
+    margin-top: 50px;
+  }
+  .movieGridContainer .gridMovieItemWrap .fav .fav-button:hover{
+    cursor: pointer;
+  }

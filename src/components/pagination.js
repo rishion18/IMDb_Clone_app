@@ -15,6 +15,7 @@ const Pagination = ({totalPages , fetchData}) =>{
 
     const[activePage , setActivePage] = useState(1);
 
+
     useEffect(()=>{
        fetchData(activePage);
        if(activePage > pages[pages.length-1]){

@@ -1,6 +1,9 @@
 import React from 'react';
 import '../App.css';
-import {useState , useEffect} from 'react';
+import {useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {setGenreList , handleGenreFilter , handleSearchFilter, setFavouriteList , handleDelete} from '../store/FavouritesReducer';
+import { deleteInMain } from '../store/MovieGridReducer';
 
 let genreids = {
     28: "Action",
@@ -23,51 +26,40 @@ let genreids = {
     10752: "War",
     37: "Western",
   };
-const Favourites = ({favList}) => {
+const Favourites = () => {
 
-    const[genreList , setGenreList] = useState([]);
-    const[favListModify , setFavListModify] = useState(favList);
-    const[selectedGenre , setSelectedGenre] = useState(null);
-    const[searchFavList , setSearchFavList] = useState(favListModify);
+    const{renderList , genreList , selectedGenre} = useSelector(store => store.Favourites);
+    const{favList} = useSelector(store => store.MovieGrid);
+   
+    const dispatch = useDispatch();
+    dispatch(setFavouriteList(favList));
+
 
     useEffect(() => {
-        const genre = Array.from(new Set(favList.map(favourite => favourite.genre_ids[0])));
-        setGenreList(genre);
+        dispatch(setGenreList(favList));
     } ,[favList])
 
-    function handleGenreFilter(uniqueGenre) {
-        setFavListModify(() => {
-            const genreFiltered = uniqueGenre ? favList.filter(item => item.genre_ids[0] === uniqueGenre) : favList;
-            setSearchFavList(genreFiltered);
-            return genreFiltered;
-          });
-       
-        setSelectedGenre(uniqueGenre);
-      }
-      
-      function handleSearchFilter(e){
-        setSearchFavList(() => {
-            const search = e.target.value;
-            const searchFiltered = e? favListModify.filter(item => item.title.toLowerCase().includes(search.toLowerCase())): favListModify;
-            return searchFiltered;
-        })
-    }
+    useEffect(() => {
+        dispatch(handleGenreFilter(null));
+    } , [])
+
+
 
   return(
     <div className='favourites'>
         <div className='fav-container'>
             <div className='genreFilter'>
                 <ul>
-                  <li className={selectedGenre === null?"selected":""} onClick={() => {handleGenreFilter(null)}}>All Genre</li>
+                  <li className={selectedGenre === null?"selected":""} onClick={() => {dispatch(handleGenreFilter(null))}}>All Genre</li>
                     {
                        genreList?.map((uniqueGenre) => {
-                        return(<li className={selectedGenre === uniqueGenre?"selected":""} onClick={() =>{handleGenreFilter(uniqueGenre)}}>{genreids[uniqueGenre]}</li>)
+                        return(<li className={selectedGenre === uniqueGenre?"selected":""} onClick={() =>{dispatch(handleGenreFilter(uniqueGenre))}}>{genreids[uniqueGenre]}</li>)
                        })
                     }
                 </ul>
             </div>
             <div className='favTableWrap'>
-            <div><input placeholder='Search by title' type='text' onChange={(e) => {handleSearchFilter(e)}}></input></div>
+            <div><input placeholder='Search by title' type='text' onChange={(e) => {dispatch(handleSearchFilter(e))}}></input></div>
                 <table className='favTable'>
                     <thead>
                         <tr>
@@ -81,15 +73,17 @@ const Favourites = ({favList}) => {
                     </thead>
                     <tbody>
                         {
-                            searchFavList?.map((item) => {
+                            renderList.length>0?renderList.map((item) => {
                                 return(<tr>
                                     <td><img src={`https://image.tmdb.org/t/p/w92${item.poster_path}`} alt="poster"></img></td>
                                     <td>{item.title}</td>
                                     <td>{genreids[item.genre_ids[0]]}</td>
                                     <td>{item.vote_count}</td>
                                     <td>{item.vote_average}</td>
-                                    <td><button>Delete</button></td>
-                                </tr>)})
+                                    <td><button onClick={() => { dispatch(handleDelete(item))
+                                                                 dispatch(deleteInMain(item)) 
+                                    }}>Delete</button></td>
+                                </tr>)}) : (<div className='noItem'>No items here</div>)
                         }
                     </tbody>
                 </table>

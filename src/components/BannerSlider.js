@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './BannerSlider.css';
 import BannerCard from './BannerCard';
 import MovieGrid from './MovieGrid';
 import Pagination from './pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActivePage, setFetchMemo } from '../store/BannerSliderReducer';
 
 
-const BannerSlider = ({setFavList}) => {
-    const [moviesData, setMoviesData] = useState([]);
+const BannerSlider = () => {
   let box = document.querySelector('.CardContainer');
 
   
@@ -21,16 +22,27 @@ const BannerSlider = ({setFavList}) => {
     box.scrollLeft = box.scrollLeft + width;
   };
 
+  const { activePage, fetchMemo } = useSelector((state) => state.BannerSlider);
+
+
+  const dispatch = useDispatch();
 
   const fetchData = (page = 1) =>{
-    const apiKey = `c8379e85d867307b4c6117b80eeefaa4&page=${page}`;
-    const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;    
-    fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      setMoviesData(data.results);
-    })
+    dispatch(setActivePage(page));
+    const fetchMemoData = fetchMemo[page];
+    if(fetchMemoData){
+     return;
+    }else{
+      const apiKey = `c8379e85d867307b4c6117b80eeefaa4&page=${page}`;
+      const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;    
+      fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        dispatch(setFetchMemo(data.results));
+ })
+    }
+    
   }
   
 
@@ -42,19 +54,20 @@ useEffect(() => {
   return (
     <div className='BannerContainer'>
       <div className='BannerWindow'>
+
+        <div className='CardContainer'>
         <div className='prev-button' onClick={handlePrevClick}></div>
         <div className='next-button' onClick={handleNextClick}></div>
-        <div className='CardContainer'>
-          {moviesData.map(movie => (
-            <BannerCard key={movie.id} backdropPath={movie.backdrop_path} />
+          {fetchMemo[activePage]?.map(movie => (
+            <BannerCard key={movie.id} movie={movie} />
           ))}
         </div>
       </div>
       <div className='gridContainer'>
-        <MovieGrid pageData ={moviesData} setFavList={setFavList}/>
+        <MovieGrid pageData ={fetchMemo[activePage]}/>
       </div>
       <div className='paginationWrap'>
-        <Pagination totalPages={moviesData?.total_pages}  fetchData={fetchData}/>
+        <Pagination totalPages={fetchMemo[activePage]?.total_pages}  fetchData={fetchData}/>
       </div>
     </div>
   );

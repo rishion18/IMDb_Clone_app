@@ -6,9 +6,17 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 .BannerCard img{
     max-width: 100%;
     max-height: auto;
     display: block;
+}
+.card-details{
+    position:absolute;
+    color:white;
+    max-width: 90%;
+    transform: translateY(300%) translateX(5%);
+
 }

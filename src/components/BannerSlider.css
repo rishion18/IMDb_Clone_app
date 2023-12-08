@@ -9,8 +9,8 @@
     width: 85%;
     overflow: hidden;
     height: 500px;
-    position: relative;
     box-shadow: inset 50px 0 10px 0 black;
+    position: relative;
 }
 .CardContainer{
     display: flex;
@@ -30,6 +30,7 @@
     top: 50%;
     left:0;
     transform: translateY(-50%) translateX(50%);
+    z-index: 1;
 }
 .next-button{
     width:50px;
@@ -41,6 +42,7 @@
     top: 50%;
     right:0;
     transform: translateY(-50%) translateX(-50%);
+    z-index: 1;
 }
 .gridContainer{
     display: flex;
@@ -52,3 +54,4 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
